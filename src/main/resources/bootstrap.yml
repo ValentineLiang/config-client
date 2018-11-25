@@ -1,0 +1,59 @@
+#/{application}/{profile}[/{label}]
+#/{application}-{profile}.yml
+#/{label}/{application}-{profile}.yml
+#/{application}-{profile}.properties
+#/{label}/{application}-{profile}.properties
+spring:
+  application:
+    name: config-client-service
+  cloud:
+    config:
+      name:  app,wechat,cache,constants,datasource,remote,server,third,template
+      label: wechat
+      discovery:
+        enabled: true
+        service-id: config-service
+      profile: dev
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: root
+    password: root
+
+
+security:
+  user:
+    name: valentine
+    password: 5201314
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://valentine:5201314@localhost:6001/eureka/
+    # 从eureka服务器注册表中获取注册信息的时间间隔（s），默认为30秒
+    registry-fetch-interval-seconds: 30
+    # 询问Eureka服务url信息变化的时间间隔（s），默认为300秒
+    eureka-service-url-poll-interval-seconds: 300
+    # 复制实例变化信息到eureka服务器所需要的时间间隔（s），默认为30秒
+    instance-info-replication-interval-seconds: 30
+    # eureka需要超时连接之前需要等待的时间，默认为5秒
+    eureka-server-connect-timeout-seconds: 5
+    # eureka需要超时读取之前需要等待的时间，默认为8秒
+    eureka-server-read-timeout-seconds: 8
+    # eureka客户端允许eureka服务器主机连接的总数目，默认是50
+    eureka-server-total-connections-per-host: 50
+  instance:
+    instance-id:  ${server.address}:${server.port}
+    ip-address:  ${server.address}
+    prefer-ip-address: true
+
+server:
+  address: localhost
+  port: 9090
+
+# springboot的安全机制设为false
+management:
+  security:
+    enabled: false
+    roles: SUPERUSER
